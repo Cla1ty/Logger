@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+
+repositories {
+    mavenCentral()
+}
+
+task deleteAar(type: Delete) {
+    delete "libs/${PUBLISH_GROUP_ID}-${PUBLISH_VERSION}.aar"
+}
+
+task createAar(type: Copy) {
+    from('build/outputs/aar')
+    into('libs/')
+    include('logger-release.aar')
+    rename('logger-release.aar', "${PUBLISH_GROUP_ID}-${PUBLISH_VERSION}.aar")
+}
+
+createAar.dependsOn(deleteAar, build)
