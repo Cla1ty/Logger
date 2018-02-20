@@ -36,8 +36,8 @@ task deleteAar(type: Delete) {
 task createAar(type: Copy) {
     from('build/outputs/aar')
     into('libs/')
-    include('logger-release.aar')
-    rename('logger-release.aar', "${PUBLISH_GROUP_ID}-${PUBLISH_VERSION}.aar")
+    include("$PUBLISH_ARTIFACT_ID-release.aar")
+    rename("$PUBLISH_ARTIFACT_ID-release.aar", "${PUBLISH_GROUP_ID}-${PUBLISH_VERSION}.aar")
 }
 
 createAar.dependsOn(deleteAar, build)

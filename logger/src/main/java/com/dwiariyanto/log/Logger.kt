@@ -22,11 +22,15 @@ object Logger {
 	internal var printer: Printer? = null
 	
 	fun install(application: Application) {
-		printer = Printer(application.packageName)
+		install(application.packageName)
 	}
 	
 	@TestOnly fun install(context: Context) {
-		printer = Printer(context.packageName)
+		install(context.packageName)
+	}
+	
+	fun install(packageName: String) {
+		printer = Printer(packageName)
 	}
 }
 
